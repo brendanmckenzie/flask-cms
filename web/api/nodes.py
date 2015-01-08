@@ -2,9 +2,11 @@ from datetime import datetime
 from flask import request
 from cms.model import Session, Node, Document, DocumentVersion
 from . import cms_api, json_response
+from .. import requires_admin
 
 
 @cms_api.route('/nodes', methods=['GET'])
+@requires_admin
 def nodes():
     db = Session()
     try:
@@ -16,6 +18,7 @@ def nodes():
 
 
 @cms_api.route('/node/<int:id>', methods=['GET'])
+@requires_admin
 def node_get(id):
     db = Session()
     try:
@@ -27,6 +30,7 @@ def node_get(id):
 
 
 @cms_api.route('/node/<int:id>', methods=['POST'])
+@requires_admin
 def node_update(id):
     db = Session()
     try:
@@ -50,6 +54,7 @@ def node_update(id):
 
 
 @cms_api.route('/nodes', methods=['POST'])
+@requires_admin
 def node_create():
     db = Session()
     try:

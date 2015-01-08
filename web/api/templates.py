@@ -1,8 +1,10 @@
 from cms import main_app, config
 from . import cms_api, json_response
+from .. import requires_admin
 
 
 @cms_api.route('/templates', methods=['GET'])
+@requires_admin
 def get_templates():
     templates = main_app.jinja_env.loader.list_templates()
 

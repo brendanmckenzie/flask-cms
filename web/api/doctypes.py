@@ -2,9 +2,11 @@ from datetime import datetime
 from flask import request
 from cms.model import Session, DocumentType
 from . import cms_api, json_response
+from .. import requires_admin
 
 
 @cms_api.route('/doc-types', methods=['GET'])
+@requires_admin
 def doc_types():
     db = Session()
     try:
@@ -16,6 +18,7 @@ def doc_types():
 
 
 @cms_api.route('/doc-types', methods=['POST'])
+@requires_admin
 def doc_type_create():
     db = Session()
     try:
@@ -35,6 +38,7 @@ def doc_type_create():
 
 
 @cms_api.route('/doc-type/<int:id>', methods=['GET'])
+@requires_admin
 def doc_type_get(id):
     db = Session()
     try:
@@ -45,6 +49,7 @@ def doc_type_get(id):
 
 
 @cms_api.route('/doc-type/<int:id>', methods=['POST'])
+@requires_admin
 def doc_type_update(id):
     db = Session()
     try:

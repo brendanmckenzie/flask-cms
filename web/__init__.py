@@ -1,5 +1,6 @@
 import os
-from flask import Blueprint
+from flask import Blueprint, g, abort
+from functools import wraps
 
 path = os.path.dirname(os.path.realpath(__file__))
 
@@ -7,6 +8,17 @@ cms = Blueprint('cms', __name__,
                 template_folder=path + '/../templates',
                 static_folder=path + '/../static',
                 url_prefix='/cms')
+
+
+def requires_admin(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if 'user' not in g or not g.user:
+            abort(401)
+        elif not g.user.admin:
+            abort(403)
+        return f(*args, **kwargs)
+    return decorated
 
 import views
 import api
