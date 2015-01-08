@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.automap import automap_base
+from .. import config
 
-engine = create_engine('postgresql://takeoffgo:$takeoffgo123@localhost:5432/takeoffgo', pool_size=20, client_encoding='utf8')
+engine = create_engine(config['db'], pool_size=20, client_encoding='utf8')
 
 Session = sessionmaker(bind=engine)
 
