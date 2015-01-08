@@ -5,10 +5,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/static/cms/site.css">
+  <link rel="stylesheet" href="{{url_for('cms.static', filename='site.css')}}">
 
-  <script src="/static/cms/scripts/vendor/jquery-2.1.3.min.js"></script>
-  <script src="/static/cms/scripts/vendor/angular.min.js"></script>
+  <script src="{{url_for('cms.static', filename='scripts/vendor/jquery-2.1.3.min.js')}}"></script>
+  <script src="{{url_for('cms.static', filename='scripts/vendor/angular.min.js')}}"></script>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-static-top">
@@ -23,7 +23,7 @@
     {% block content %}{% endblock %}
   </div>
 
-  <script src="/static/cms/lib.js"></script>
-  <script src="/static/cms/site.js"></script>
+  <script src="{{url_for('cms.static', filename='lib.js')}}"></script>
+  <script src="{{url_for('cms.static', filename='site.js')}}"></script>
 </body>
 </html>

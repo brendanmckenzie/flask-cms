@@ -4,4 +4,4 @@ from . import cms
 
 @cms.route('/cms')
 def home():
-    return render_template('cms/home.html')
+    return render_template('home.html')
