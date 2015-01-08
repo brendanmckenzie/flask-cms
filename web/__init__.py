@@ -1,8 +1,11 @@
+import os
 from flask import Blueprint
 
+path = os.path.dirname(os.path.realpath(__file__))
+
 cms = Blueprint('cms', __name__,
-                template_folder='../../cms/templates',
-                static_folder='../../cms/static',
+                template_folder=path + '/../templates',
+                static_folder=path + '/../static',
                 url_prefix='/cms')
 
 import views

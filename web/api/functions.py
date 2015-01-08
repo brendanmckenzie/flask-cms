@@ -86,6 +86,9 @@ def node_create():
         node = Node()
         node.document = document
         node.alias = request.json['alias']
+
+        if 'parent' in request.json:
+            node.parent_id = request.json.get['parent']['id']
         node.path = []  # TODO: this will help building trees later.
 
         db.add(node)
