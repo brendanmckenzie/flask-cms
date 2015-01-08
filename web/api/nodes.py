@@ -33,7 +33,10 @@ def node_update(id):
         ent = db.query(Node).get(id)
 
         ent.alias = request.json['alias']
+
         ent.document.modified = datetime.utcnow()
+        ent.document.template = request.json['document']['template']
+        ent.document.type_id = request.json['document']['docType']['id']
 
         version = ent.document.latest_version()
         version.data = request.json['document']['data']

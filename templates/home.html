@@ -27,7 +27,8 @@
                         <li ng-repeat="f in n.document.docType.fields">
                             <div class="form-group">
                                 <label ng-bind="f.name"></label>
-                                <input type="text" class="form-control" ng-model="n.document.data[f.alias]" />
+                                <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
+                                <textarea ng-if="f.type == 'longText'" class="form-control" ng-model="n.document.data[f.alias]"></textarea>
                             </div>
                         </li>
                     </ul>
@@ -62,6 +63,7 @@
                     <strong>Fields</strong>
                     <ul class="list-unstyled">
                         <li ng-repeat="f in dt.fields">
+                            <strong>FIELD <span ng-bind="$index + 1"></span></strong>
                             <div class="form-group">
                                 <label>Alias</label>
                                 <input type="text" class="form-control" ng-model="f.alias" placeholder="Alias" />
@@ -70,6 +72,11 @@
                                 <label>Name</label>
                                 <input type="text" class="form-control" ng-model="f.name" placeholder="Field name" />
                             </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select class="form-control" ng-options="dt3 for dt3 in fieldTypes" ng-model="f.type"></select>
+                            </div>
+                            <hr />
                         </li>
                         <li><button class="btn btn-default btn-sm" ng-click="(dt.fields = dt.fields || []).push({})" type="button">Add field</button></li>
                     </ul>

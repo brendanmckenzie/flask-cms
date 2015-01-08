@@ -3,6 +3,8 @@ from .model import Node, Session
 from sqlalchemy import and_
 
 main_app = None
+config = {}
+config['template_root'] = 'cms_content/'
 
 
 def get_node_from_hier(db, hier):
@@ -22,10 +24,13 @@ def get_node_from_hier(db, hier):
     return cur_node
 
 
-def init_cms(app):
+def init_cms(app, template_root=None):
     global main_app
 
     main_app = app
+
+    if template_root:
+        config['template_root'] = template_root
 
     from web import cms
     from web.api import cms_api
@@ -43,7 +48,7 @@ def init_cms(app):
                 abort(404)
             else:
                 data = node.document.latest_version().data
-                template = 'cms_content/' + node.document.template
+                template = config['template_root'] + node.document.template
                 return render_template(template, **data)
         finally:
             db.close()

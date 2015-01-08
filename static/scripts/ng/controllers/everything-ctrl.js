@@ -4,6 +4,8 @@
     function EverythingCtrl($scope, $http) {
         $scope.moment = moment;
 
+        $scope.fieldTypes = ['shortText', 'longText', 'image'];
+
         $scope.loadTemplates = function () {
             $http.get('/cms/api/templates').then(function (resp) {
                 $scope.templates = resp.data;
