@@ -22,6 +22,8 @@ class JsonEncoder(json.JSONEncoder):
 def json_response(data):
     return Response(json.dumps(data, cls=JsonEncoder, separators=(',', ':')), mimetype='application/json')
 
-import functions
+import doctypes
+import nodes
+import templates
 
-__all__ = ['functions']
+__all__ = ['doctypes', 'nodes', 'templates']

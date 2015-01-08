@@ -4,7 +4,7 @@ create table cms.document_type (
     id serial not null primary key,
     name varchar(128) not null,
     alias varchar(128) not null,
-    fields jsonb,
+    fields json,
 
     created timestamp not null default current_timestamp,
     modified timestamp not null default current_timestamp
@@ -22,7 +22,7 @@ create table cms.document (
 create table cms.document_version (
     id serial not null primary key,
     document_id integer not null references cms.document ( id ),
-    data jsonb,
+    data json,
     is_current boolean not null default 'false',
 
     created timestamp not null default current_timestamp,

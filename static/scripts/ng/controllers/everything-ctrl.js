@@ -4,7 +4,11 @@
     function EverythingCtrl($scope, $http) {
         $scope.moment = moment;
 
-        $scope.templates = ['default'];
+        $scope.loadTemplates = function () {
+            $http.get('/cms/api/templates').then(function (resp) {
+                $scope.templates = resp.data;
+            });
+        };
 
         $scope.loadNodes = function () {
             $http.get('/cms/api/nodes').then(function (resp) {
@@ -34,6 +38,7 @@
             });
         };
 
+        $scope.loadTemplates();
         $scope.loadDocTypes();
         $scope.loadNodes();
     }
