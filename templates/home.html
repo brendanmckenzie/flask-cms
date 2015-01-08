@@ -1,0 +1,92 @@
+{% extends 'cms/layouts/_default.html' %}
+
+{% block content %}
+<div ng-controller="EverythingCtrl" class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Create Node</div>
+            <div class="panel-body">
+                <form ng-submit="saveNode()">
+                    <div class="form-group">
+                        <label>Alias</label>
+                        <input type="text" class="form-control" ng-model="n.alias" />
+                    </div>
+                    <div class="form-group">
+                        <label>Parent</label>
+                        <select class="form-control" ng-options="n2.alias for n2 in nodes" ng-model="n.parent"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Template</label>
+                        <select class="form-control" ng-options="a for a in templates" ng-model="n.document.template"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Document Type</label>
+                        <select class="form-control" ng-options="dt3.name for dt3 in docTypes" ng-model="n.document.docType"></select>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="f in n.document.docType.fields">
+                            <div class="form-group">
+                                <label ng-bind="f.name"></label>
+                                <input type="text" class="form-control" ng-model="n.document.data[f.alias]" />
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="$parent.n={}">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Nodes</div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    <li ng-repeat="n2 in nodes" ng-bind="n2.alias" ng-click="$parent.n = n2"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Create Document Type</div>
+            <div class="panel-body">
+                <form ng-submit="saveDocType()">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" ng-model="dt.name" />
+                    </div>
+                    <div class="form-group">
+                        <label>Alias</label>
+                        <input type="text" class="form-control" ng-model="dt.alias" />
+                    </div>
+                    <strong>Fields</strong>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="f in dt.fields">
+                            <div class="form-group">
+                                <label>Alias</label>
+                                <input type="text" class="form-control" ng-model="f.alias" placeholder="Alias" />
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" ng-model="f.name" placeholder="Field name" />
+                            </div>
+                        </li>
+                        <li><button class="btn btn-default btn-sm" ng-click="(dt.fields = dt.fields || []).push({})" type="button">Add field</button></li>
+                    </ul>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-warning" type="button" ng-if="dt.id" ng-click="$parent.dt={}">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Document Types</div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    <li ng-repeat="dt2 in docTypes" ng-bind="dt2.name" ng-click="$parent.dt = dt2"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
