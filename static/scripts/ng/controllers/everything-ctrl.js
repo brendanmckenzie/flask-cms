@@ -27,6 +27,11 @@
         };
 
         $scope.selectNode = function (node) {
+            angular.forEach($scope.docTypes, function (docType) {
+                if (docType.id == node.document.docType.id) {
+                    node.document.docType = docType;
+                }
+            });
             $scope.n = node;
         };
 
@@ -40,6 +45,17 @@
                 $scope.loadNodes();
                 $scope.n = {};
             });
+        };
+
+        $scope.nodeHasChildren = function (node) {
+            var ret = false;
+            angular.forEach($scope.nodes, function (n) {
+                if (n.parent_id === node.id) {
+                    ret = true;
+                    return false;
+                }
+            });
+            return ret;
         };
 
         $scope.loadDocTypes = function () {
