@@ -2,98 +2,172 @@
 
 {% block content %}
 <div ng-controller="EverythingCtrl" class="row">
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Create Node</div>
-            <div class="panel-body">
-                <form ng-submit="saveNode()">
-                    <div class="form-group">
-                        <label>Alias</label>
-                        <input type="text" class="form-control" ng-model="n.alias" />
-                    </div>
-                    <div class="form-group">
-                        <label>Parent</label>
-                        <select class="form-control" ng-options="n2.alias for n2 in nodes" ng-model="n.parent"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Template</label>
-                        <select class="form-control" ng-options="a for a in templates" ng-model="n.document.template"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Document Type</label>
-                        <select class="form-control" ng-options="dt3.name for dt3 in docTypes" ng-model="n.document.docType"></select>
-                    </div>
-                    <ul class="list-unstyled">
-                        <li ng-repeat="f in n.document.docType.fields">
-                            <div class="form-group">
-                                <label ng-bind="f.name"></label>
-                                <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
-                                <textarea ng-if="f.type == 'longText'" class="form-control" ng-model="n.document.data[f.alias]"></textarea>
-                            </div>
-                        </li>
-                    </ul>
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="$parent.n={}">Cancel</button>
-                </form>
-            </div>
-        </div>
+    <div role="tabpanel">
 
+        <!-- Nav tabs -->
         <div class="panel panel-default">
-            <div class="panel-heading">Nodes</div>
             <div class="panel-body">
-                <ul class="list-unstyled">
-                    <li ng-repeat="n2 in nodes" ng-bind="n2.alias" ng-click="$parent.n = n2"></li>
+                <ul class="nav nav-pills" role="tablist">
+                    <li role="presentation" class="active"><a href="#nodes" aria-controls="nodes" role="tab" data-toggle="tab">Nodes</a></li>
+                    <li role="presentation"><a href="#doctypes" aria-controls="doctypes" role="tab" data-toggle="tab">Document Types</a></li>
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Create Document Type</div>
-            <div class="panel-body">
-                <form ng-submit="saveDocType()">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" ng-model="dt.name" />
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="nodes">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Nodes</div>
+                            <div class="panel-body">
+                                <script type="text/ng-template"  id="node_tree_item.html">
+                                    <button class="btn btn-default btn-xs" ng-click="n2.$expanded=!n2.$expanded">
+                                        <i ng-show="n2.$expanded" class="fa fa-minus"></i>
+                                        <i ng-hide="n2.$expanded" class="fa fa-plus"></i>
+                                    </button>
+                                    <button class="btn btn-link" ng-click="selectNode(n2)" ng-bind="n2.alias"></button>
+                                    <ul ng-show="n2.$expanded" class="list-unstyled tree">
+                                        <li ng-repeat="n2 in nodes | filter:{parent_id:n2.id}" ng-include="'node_tree_item.html'"></li>
+                                    </ul>
+                                </script>
+
+                                <ul class="list-unstyled tree">
+                                    <li ng-repeat="n2 in nodes | filter:{parent_id:null}" ng-include="'node_tree_item.html'"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Alias</label>
-                        <input type="text" class="form-control" ng-model="dt.alias" />
+                    <div class="col-lg-9">
+                        <form ng-submit="saveNode()">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Alias</label>
+                                        <input type="text" class="form-control" ng-model="n.alias" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Parent</label>
+                                        <select class="form-control" ng-options="n2.alias for n2 in nodes" ng-model="n.parent"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Template</label>
+                                        <select class="form-control" ng-options="a for a in templates" ng-model="n.document.template"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Document Type</label>
+                                        <select class="form-control" ng-options="dt3.name for dt3 in docTypes" ng-model="n.document.docType"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="list-unstyled">
+                                <li ng-repeat="f in n.document.docType.fields">
+                                    <div class="form-group">
+                                        <label ng-bind="f.name"></label>
+                                        <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
+                                        <textarea ng-if="f.type == 'longText'" class="form-control" ng-model="n.document.data[f.alias]"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="newNode()">Cancel</button>
+                        </form>
                     </div>
-                    <strong>Fields</strong>
-                    <ul class="list-unstyled">
-                        <li ng-repeat="f in dt.fields">
-                            <strong>FIELD <span ng-bind="$index + 1"></span></strong>
-                            <div class="form-group">
-                                <label>Alias</label>
-                                <input type="text" class="form-control" ng-model="f.alias" placeholder="Alias" />
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="doctypes">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Document Types</div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="dt2 in docTypes">
+                                        <button class="btn btn-link" ng-bind="dt2.name" ng-click="$parent.dt = dt2"></button>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" ng-model="f.name" placeholder="Field name" />
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <form ng-submit="saveDocType()">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" ng-model="dt.name" />
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Alias</label>
+                                        <input type="text" class="form-control" ng-model="dt.alias" />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Type</label>
-                                <select class="form-control" ng-options="dt3 for dt3 in fieldTypes" ng-model="f.type"></select>
+                            <p>
+                                <strong>Fields</strong>
+                                <button class="btn btn-default btn-sm" ng-click="(dt.fields = dt.fields || []).push({})" type="button">Add field</button>
+                            </p>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default" ng-repeat="f in dt.fields">
+                                    <div role="tab" class="panel-heading" id="heading-{{'{{'}}$index}}">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{'{{'}}$index}}" aria-expanded="true" aria-controls="collapseOne">
+                                                <span ng-bind="f.name || ('Field ' + ($index + 1).toString())"></span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-{{'{{'}}$index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapse-{{'{{'}}$index}}">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Name</label>
+                                                        <input type="text" class="form-control" ng-model="f.name" placeholder="Field name" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Alias</label>
+                                                        <input type="text" class="form-control" ng-model="f.alias" placeholder="Alias" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Type</label>
+                                                        <select class="form-control" ng-options="dt3 for dt3 in fieldTypes" ng-model="f.type"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-right">
+                                                    <button class="btn btn-danger btn-sm" ng-click="dt.fields.splice($index, 1)" type="button"><i class="fa fa-times"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <hr />
-                        </li>
-                        <li><button class="btn btn-default btn-sm" ng-click="(dt.fields = dt.fields || []).push({})" type="button">Add field</button></li>
-                    </ul>
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-warning" type="button" ng-if="dt.id" ng-click="$parent.dt={}">Cancel</button>
-                </form>
+
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-warning" type="button" ng-if="dt.id" ng-click="$parent.dt={}">Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Document Types</div>
-            <div class="panel-body">
-                <ul class="list-unstyled">
-                    <li ng-repeat="dt2 in docTypes" ng-bind="dt2.name" ng-click="$parent.dt = dt2"></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}

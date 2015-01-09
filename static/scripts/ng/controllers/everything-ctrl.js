@@ -26,6 +26,14 @@
             });
         };
 
+        $scope.selectNode = function (node) {
+            $scope.n = node;
+        };
+
+        $scope.newNode = function () {
+            $scope.n = {};
+        };
+
         $scope.loadDocTypes = function () {
             $http.get('/cms/api/doc-types').then(function (resp) {
                 $scope.docTypes = resp.data;
