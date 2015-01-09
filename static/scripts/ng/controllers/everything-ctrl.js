@@ -34,6 +34,14 @@
             $scope.n = {};
         };
 
+        $scope.deleteNode = function (id) {
+            var url = '/cms/api/node/' + id;
+            $http.delete(url).then(function () {
+                $scope.loadNodes();
+                $scope.n = {};
+            });
+        };
+
         $scope.loadDocTypes = function () {
             $http.get('/cms/api/doc-types').then(function (resp) {
                 $scope.docTypes = resp.data;

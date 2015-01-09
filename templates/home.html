@@ -74,12 +74,13 @@
                                     <div class="form-group">
                                         <label ng-bind="f.name"></label>
                                         <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
-                                        <textarea ng-if="f.type == 'longText'" class="form-control" ng-model="n.document.data[f.alias]"></textarea>
+                                        <textarea ng-if="f.type == 'longText'" class="code form-control" ng-model="n.document.data[f.alias]"></textarea>
                                     </div>
                                 </li>
                             </ul>
                             <button class="btn btn-primary" type="submit">Save</button>
                             <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="newNode()">Cancel</button>
+                            <button class="btn btn-danger" type="button" ng-if="n.id" ng-click="deleteNode(n.id)">Delete</button>
                         </form>
                     </div>
                 </div>
