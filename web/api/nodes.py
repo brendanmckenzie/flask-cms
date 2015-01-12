@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import request
 from cms.model import Session, Node, Document, DocumentVersion
 from . import cms_api, json_response
-from .. import requires_admin
+from .. import requires_admin, empty_response
 
 
 @cms_api.route('/nodes', methods=['GET'])
@@ -64,7 +64,7 @@ def node_create():
 
         version = DocumentVersion()
         version.document = document
-        version.data = request.json['document']['data']
+        version.data = request.json['document'].get('data')
 
         node = Node()
         node.document = document
@@ -79,5 +79,21 @@ def node_create():
         db.commit()
 
         return json_response({'id': node.id})
+    finally:
+        db.close()
+
+
+@cms_api.route('/node/<int:id>', methods=['DELETE'])
+@requires_admin
+def node_delete(id):
+    db = Session()
+    try:
+        ent = db.query(Node).get(id)
+
+        db.delete(ent)
+
+        db.commit()
+
+        return empty_response()
     finally:
         db.close()

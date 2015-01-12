@@ -4,7 +4,6 @@
 <div ng-controller="EverythingCtrl" class="row">
     <div role="tabpanel">
 
-        <!-- Nav tabs -->
         <div class="panel panel-default">
             <div class="panel-body">
                 <ul class="nav nav-pills" role="tablist">
@@ -23,7 +22,7 @@
                             <div class="panel-heading">Nodes</div>
                             <div class="panel-body">
                                 <script type="text/ng-template"  id="node_tree_item.html">
-                                    <button class="btn btn-default btn-xs" ng-click="n2.$expanded=!n2.$expanded">
+                                    <button class="btn btn-default btn-xs" ng-click="n2.$expanded=!n2.$expanded" ng-disabled="!nodeHasChildren(n2)">
                                         <i ng-show="n2.$expanded" class="fa fa-minus"></i>
                                         <i ng-hide="n2.$expanded" class="fa fa-plus"></i>
                                     </button>
@@ -75,12 +74,13 @@
                                     <div class="form-group">
                                         <label ng-bind="f.name"></label>
                                         <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
-                                        <textarea ng-if="f.type == 'longText'" class="form-control" ng-model="n.document.data[f.alias]"></textarea>
+                                        <textarea ng-if="f.type == 'longText'" class="code form-control" ng-model="n.document.data[f.alias]"></textarea>
                                     </div>
                                 </li>
                             </ul>
                             <button class="btn btn-primary" type="submit">Save</button>
                             <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="newNode()">Cancel</button>
+                            <button class="btn btn-danger" type="button" ng-if="n.id" ng-really-click="deleteNode(n.id)">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -152,10 +152,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-body text-right">
-                                                    <button class="btn btn-danger btn-sm" ng-click="dt.fields.splice($index, 1)" type="button"><i class="fa fa-times"></i> Remove</button>
-                                                </div>
+                                            <div class="text-right">
+                                                <button class="btn btn-danger btn-sm" ng-click="dt.fields.splice($index, 1)" type="button"><i class="fa fa-times"></i> Remove</button>
                                             </div>
                                         </div>
                                     </div>
