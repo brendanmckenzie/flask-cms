@@ -25,5 +25,6 @@ def json_response(data):
 import doctypes
 import nodes
 import templates
+import routes
 
-__all__ = ['doctypes', 'nodes', 'templates']
+__all__ = ['doctypes', 'nodes', 'templates', 'routes']

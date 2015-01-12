@@ -48,9 +48,16 @@
             });
         };
 
+        $scope.loadRoutes = function () {
+            $http.get('/cms/api/all-routes').then(function (resp) {
+                $scope.allRoutes = resp.data;
+            });
+        };
+
         $scope.loadTemplates();
         $scope.loadDocTypes();
         $scope.loadNodes();
+        $scope.loadRoutes();
     }
 
     window.app.controller('EverythingCtrl', ['$scope', '$http', EverythingCtrl]);

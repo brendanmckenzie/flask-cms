@@ -10,6 +10,7 @@
                 <ul class="nav nav-pills" role="tablist">
                     <li role="presentation" class="active"><a href="#nodes" aria-controls="nodes" role="tab" data-toggle="tab">Nodes</a></li>
                     <li role="presentation"><a href="#doctypes" aria-controls="doctypes" role="tab" data-toggle="tab">Document Types</a></li>
+                    <li role="presentation"><a href="#routes" aria-controls="routes" role="tab" data-toggle="tab">Routes</a></li>
                 </ul>
             </div>
         </div>
@@ -84,6 +85,7 @@
                     </div>
                 </div>
             </div>
+
             <div role="tabpanel" class="tab-pane" id="doctypes">
                 <div class="row">
                     <div class="col-lg-3">
@@ -165,6 +167,25 @@
                         </form>
                     </div>
                 </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="routes">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rule</th>
+                            <th class="col-lg-2">Methods</th>
+                            <th class="col-lg-2">Endpoint</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in allRoutes">
+                            <td><code ng-bind="r.url"></code></td>
+                            <td ng-bind="r.name"></td>
+                            <td ng-bind="r.methods"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
