@@ -15,7 +15,12 @@ app.run()
 ## Getting started
 
  1. Go to the project directory
- 2. `git submodule add https://github.com/brendanmckenzie/flask-cms.git cms`
+ 2. Add this repository as a submodule
+   * `git submodule add https://github.com/brendanmckenzie/flask-cms.git cms`
+   * `git submodule init`
+   * `git submodule update`
+   * `cd cms`
+   * `git checkout master`
  3. Run the [SQL file](https://github.com/brendanmckenzie/flask-cms/blob/master/database/000_up_initial.sql) in `database` directory
  4. Add the above snippet to your application startup
 
