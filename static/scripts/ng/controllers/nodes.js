@@ -11,19 +11,6 @@
             });
         };
 
-        $scope.selectNode = function (node) {
-            angular.forEach($scope.docTypes, function (docType) {
-                if (docType.id === node.document.docType.id) {
-                    node.document.docType = docType;
-                }
-            });
-            $scope.n = node;
-        };
-
-        $scope.newNode = function () {
-            $scope.n = {};
-        };
-
         $scope.nodeHasChildren = function (node) {
             var ret = false;
             angular.forEach($scope.nodes, function (n) {
@@ -38,13 +25,17 @@
         $scope.$on('nodes:updated', function () {
             $scope.loadNodes();
         });
-
-        $scope.newNode();
     }
 
     window.app.controller('NodesCtrl', ['$scope', '$http', 'NodesSvc', 'nodes', NodesCtrl]);
 
     function NodeDetailCtrl($scope, $http, $state, NodesSvc, node, docTypes, templates) {
+        angular.forEach(docTypes, function (docType) {
+            if (docType.id === node.document.docType.id) {
+                node.document.docType = docType;
+            }
+        });
+
         $scope.node = node;
         $scope.docTypes = docTypes;
         $scope.templates = templates;
