@@ -24,6 +24,7 @@ app.run()
    * `git checkout master`
  4. Run the [SQL file](https://github.com/brendanmckenzie/flask-cms/blob/master/database/000_up_initial.sql) in `database` directory
  5. Add the above snippet to your application startup
+ 6. Go to http://yoursite/cms
 
 ## Assumptions
 This module makes a few assumptions.
