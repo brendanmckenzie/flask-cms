@@ -23,6 +23,7 @@
     {% block content %}{% endblock %}
   </div>
 
+  <script>window.static_root = '{{url_for('cms.static', filename='')}}';</script>
   <script src="{{url_for('cms.static', filename='lib.js')}}"></script>
   <script src="{{url_for('cms.static', filename='site.js')}}"></script>
 </body>

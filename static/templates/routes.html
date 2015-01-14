@@ -1,0 +1,16 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Rule</th>
+            <th class="col-lg-2">Methods</th>
+            <th class="col-lg-2">Endpoint</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="r in allRoutes">
+            <td><code ng-bind="r.url"></code></td>
+            <td ng-bind="r.name"></td>
+            <td ng-bind="r.methods"></td>
+        </tr>
+    </tbody>
+</table>
