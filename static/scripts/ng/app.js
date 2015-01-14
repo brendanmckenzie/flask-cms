@@ -11,8 +11,18 @@
                 templateUrl: window.static_root + 'templates/nodes.html',
                 controller: 'NodesCtrl',
                 resolve: {
-                    data: function (NodesSvc) {
+                    nodes: function (NodesSvc) {
                         return NodesSvc.all();
+                    }
+                }
+            })
+            .state('nodes.detail', {
+                url: '/:id',
+                templateUrl: window.static_root + 'templates/node_detail.html',
+                controller: 'NodeDetailCtrl',
+                resolve: {
+                    node: function (NodesSvc, $stateParams) {
+                        return NodesSvc.get($stateParams.id);
                     },
                     docTypes: function (DocTypesSvc) {
                         return DocTypesSvc.all();
@@ -22,8 +32,21 @@
                     }
                 }
             })
-            .state('nodes.detail', {
-                templateUrl: window.static_root + 'templates/node_detail.html'
+            .state('nodes.create', {
+                url: '/new',
+                templateUrl: window.static_root + 'templates/node_detail.html',
+                controller: 'NodeDetailCtrl',
+                resolve: {
+                    node: function () {
+                        return {};
+                    },
+                    docTypes: function (DocTypesSvc) {
+                        return DocTypesSvc.all();
+                    },
+                    templates: function (TemplatesSvc) {
+                        return TemplatesSvc.all();
+                    }
+                }
             })
             .state('doctypes', {
                 url: '/doc-types',

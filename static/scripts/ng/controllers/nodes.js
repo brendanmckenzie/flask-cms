@@ -1,23 +1,13 @@
 (function (window) {
     'use strict';
 
-    function NodesCtrl($scope, $http, $state, NodesSvc, data, docTypes, templates) {
-        $scope.nodes = data;
-        $scope.docTypes = docTypes;
-        $scope.templates = templates;
+    function NodesCtrl($scope, $http, NodesSvc, nodes) {
+        $scope.nodes = nodes;
         $scope.$expanded = {};
 
         $scope.loadNodes = function () {
             NodesSvc.all().then(function (data) {
                 $scope.nodes = data;
-            });
-        };
-
-        $scope.saveNode = function () {
-            var url = ($scope.n && $scope.n.id) ? '/cms/api/node/' + $scope.n.id : '/cms/api/nodes';
-            $http.post(url, $scope.n).then(function () {
-                $scope.loadNodes();
-                $scope.n = null;
             });
         };
 
@@ -28,22 +18,10 @@
                 }
             });
             $scope.n = node;
-
-            $state.transitionTo('nodes.detail');
         };
 
         $scope.newNode = function () {
             $scope.n = {};
-
-            $state.transitionTo('nodes.detail');
-        };
-
-        $scope.deleteNode = function (id) {
-            var url = '/cms/api/node/' + id;
-            $http.delete(url).then(function () {
-                $scope.loadNodes();
-                $scope.n = {};
-            });
         };
 
         $scope.nodeHasChildren = function (node) {
@@ -57,9 +35,39 @@
             return ret;
         };
 
+        $scope.$on('nodes:updated', function () {
+            $scope.loadNodes();
+        });
+
         $scope.newNode();
     }
 
-    window.app.controller('NodesCtrl', ['$scope', '$http', '$state', 'NodesSvc', 'data', 'docTypes', 'templates', NodesCtrl]);
+    window.app.controller('NodesCtrl', ['$scope', '$http', 'NodesSvc', 'nodes', NodesCtrl]);
+
+    function NodeDetailCtrl($scope, $http, $state, NodesSvc, node, docTypes, templates) {
+        $scope.node = node;
+        $scope.docTypes = docTypes;
+        $scope.templates = templates;
+
+        $scope.saveNode = function () {
+            var url = ($scope.node && $scope.node.id) ? '/cms/api/node/' + $scope.node.id : '/cms/api/nodes';
+            $http.post(url, $scope.node).then(function () {
+                $scope.$emit('nodes:updated');
+
+                $state.transitionTo('nodes');
+            });
+        };
+
+        $scope.deleteNode = function () {
+            var url = '/cms/api/node/' + $scope.node.id;
+            $http.delete(url).then(function () {
+                $scope.$emit('nodes:updated');
+
+                $state.transitionTo('nodes');
+            });
+        };
+    }
+
+    window.app.controller('NodeDetailCtrl', ['$scope', '$http', '$state', 'NodesSvc', 'node', 'docTypes', 'templates', NodeDetailCtrl]);
 
 })(window);

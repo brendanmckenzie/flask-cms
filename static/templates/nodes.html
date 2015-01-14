@@ -2,11 +2,13 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <script type="text/ng-template"  id="node_tree_item.html">
-                <button class="btn btn-default btn-xs" ng-click="$expanded[n2.id]=!$expanded[n2.id]" ng-disabled="!nodeHasChildren(n2)">
-                    <i ng-show="$expanded[n2.id]" class="fa fa-minus"></i>
-                    <i ng-hide="$expanded[n2.id]" class="fa fa-plus"></i>
-                </button>
-                <a href ng-click="selectNode(n2)" ng-bind="n2.alias"></a>
+                <a href ui-sref="nodes.detail({id:n2.id})">
+                    <button class="btn btn-default btn-xs" ng-click="$expanded[n2.id]=!$expanded[n2.id]" ng-disabled="!nodeHasChildren(n2)">
+                        <i ng-show="$expanded[n2.id]" class="fa fa-minus"></i>
+                        <i ng-hide="$expanded[n2.id]" class="fa fa-plus"></i>
+                    </button>
+                    <span ng-bind="n2.alias"</span>
+                </a>
                 <ul ng-show="$expanded[n2.id]" class="nav nav-sidebar tree">
                     <li ng-repeat="n2 in nodes | filter:{parent_id:n2.id}" ng-include="'node_tree_item.html'"></li>
                 </ul>
@@ -15,6 +17,7 @@
             <ul class="nav nav-sidebar tree">
                 <li ng-repeat="n2 in nodes | filter:{parent_id:null}" ng-include="'node_tree_item.html'"></li>
             </ul>
+            <a class="btn btn-primary" href ui-sref="nodes.create">New node</a>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div ui-view></div>
