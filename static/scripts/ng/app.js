@@ -5,6 +5,7 @@
 
     app.config(['$stateProvider', function ($stateProvider) {
         $stateProvider
+            .state('home', { template: '' })
             .state('nodes', {
                 templateUrl: window.static_root + 'templates/nodes.html',
                 controller: 'NodesCtrl',
