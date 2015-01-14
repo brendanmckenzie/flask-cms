@@ -1,7 +1,7 @@
 (function (window) {
     'use strict';
 
-    function NodesCtrl($scope, $http, NodesSvc, data, docTypes, templates) {
+    function NodesCtrl($scope, $http, $state, NodesSvc, data, docTypes, templates) {
         $scope.nodes = data;
         $scope.docTypes = docTypes;
         $scope.templates = templates;
@@ -28,10 +28,14 @@
                 }
             });
             $scope.n = node;
+
+            $state.transitionTo('nodes.detail');
         };
 
         $scope.newNode = function () {
             $scope.n = {};
+
+            $state.transitionTo('nodes.detail');
         };
 
         $scope.deleteNode = function (id) {
@@ -52,8 +56,10 @@
             });
             return ret;
         };
+
+        $scope.newNode();
     }
 
-    window.app.controller('NodesCtrl', ['$scope', '$http', 'NodesSvc', 'data', 'docTypes', 'templates', NodesCtrl]);
+    window.app.controller('NodesCtrl', ['$scope', '$http', '$state', 'NodesSvc', 'data', 'docTypes', 'templates', NodesCtrl]);
 
 })(window);

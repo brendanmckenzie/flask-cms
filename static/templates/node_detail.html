@@ -1,0 +1,43 @@
+<form ng-submit="saveNode()">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Alias</label>
+                <input type="text" class="form-control" ng-model="n.alias" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Parent</label>
+                <select class="form-control" ng-options="n2.alias for n2 in nodes" ng-model="n.parent"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Template</label>
+                <select class="form-control" ng-options="a for a in templates" ng-model="n.document.template"></select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Document Type</label>
+                <select class="form-control" ng-options="dt3.name for dt3 in docTypes" ng-model="n.document.docType"></select>
+            </div>
+        </div>
+    </div>
+
+    <ul class="list-unstyled">
+        <li ng-repeat="f in n.document.docType.fields">
+            <div class="form-group">
+                <label ng-bind="f.name"></label>
+                <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
+                <textarea ng-if="f.type == 'longText'" class="code form-control" ng-model="n.document.data[f.alias]"></textarea>
+            </div>
+        </li>
+    </ul>
+    <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="newNode()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-if="n.id" ng-really-click="deleteNode(n.id)">Delete</button>
+</form>

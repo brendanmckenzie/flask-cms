@@ -2,7 +2,11 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <script type="text/ng-template"  id="node_tree_item.html">
-                <a ng-click="$expanded[n2.id]=!$expanded[n2.id]" ng-disabled="!nodeHasChildren(n2)" ng-click="selectNode(n2)" ng-bind="n2.alias"></a>
+                <button class="btn btn-default btn-xs" ng-click="$expanded[n2.id]=!$expanded[n2.id]" ng-disabled="!nodeHasChildren(n2)">
+                    <i ng-show="$expanded[n2.id]" class="fa fa-minus"></i>
+                    <i ng-hide="$expanded[n2.id]" class="fa fa-plus"></i>
+                </button>
+                <a href ng-click="selectNode(n2)" ng-bind="n2.alias"></a>
                 <ul ng-show="$expanded[n2.id]" class="nav nav-sidebar tree">
                     <li ng-repeat="n2 in nodes | filter:{parent_id:n2.id}" ng-include="'node_tree_item.html'"></li>
                 </ul>
@@ -13,49 +17,7 @@
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <form ng-submit="saveNode()">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Alias</label>
-                            <input type="text" class="form-control" ng-model="n.alias" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Parent</label>
-                            <select class="form-control" ng-options="n2.alias for n2 in nodes" ng-model="n.parent"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Template</label>
-                            <select class="form-control" ng-options="a for a in templates" ng-model="n.document.template"></select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Document Type</label>
-                            <select class="form-control" ng-options="dt3.name for dt3 in docTypes" ng-model="n.document.docType"></select>
-                        </div>
-                    </div>
-                </div>
-
-                <ul class="list-unstyled">
-                    <li ng-repeat="f in n.document.docType.fields">
-                        <div class="form-group">
-                            <label ng-bind="f.name"></label>
-                            <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="n.document.data[f.alias]" />
-                            <textarea ng-if="f.type == 'longText'" class="code form-control" ng-model="n.document.data[f.alias]"></textarea>
-                        </div>
-                    </li>
-                </ul>
-                <button class="btn btn-primary" type="submit">Save</button>
-                <button class="btn btn-warning" type="button" ng-if="n.id" ng-click="newNode()">Cancel</button>
-                <button class="btn btn-danger" type="button" ng-if="n.id" ng-really-click="deleteNode(n.id)">Delete</button>
-            </form>
+            <div ui-view></div>
         </div>
     </div>
 </div>

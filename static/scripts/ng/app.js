@@ -7,6 +7,7 @@
         $stateProvider
             .state('home', { template: '' })
             .state('nodes', {
+                url: '/nodes',
                 templateUrl: window.static_root + 'templates/nodes.html',
                 controller: 'NodesCtrl',
                 resolve: {
@@ -21,7 +22,11 @@
                     }
                 }
             })
+            .state('nodes.detail', {
+                templateUrl: window.static_root + 'templates/node_detail.html'
+            })
             .state('doctypes', {
+                url: '/doc-types',
                 templateUrl: window.static_root + 'templates/doctypes.html',
                 controller: 'DocTypesCtrl',
                 resolve: {
@@ -31,6 +36,7 @@
                 }
             })
             .state('routes', {
+                url: '/routes',
                 templateUrl: window.static_root + 'templates/routes.html',
                 controller: 'RoutesCtrl',
                 resolve: {
