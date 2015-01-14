@@ -35,7 +35,7 @@
                 }
             })
             .state('nodes.create', {
-                url: '/new',
+                // url: '/new',
                 templateUrl: window.static_root + 'templates/node_detail.html',
                 controller: 'NodeDetailCtrl',
                 resolve: {
@@ -55,8 +55,28 @@
                 templateUrl: window.static_root + 'templates/doctypes.html',
                 controller: 'DocTypesCtrl',
                 resolve: {
-                    data: function (DocTypesSvc) {
+                    docTypes: function (DocTypesSvc) {
                         return DocTypesSvc.all();
+                    }
+                }
+            })
+            .state('doctypes.detail', {
+                url: '/:id',
+                templateUrl: window.static_root + 'templates/doctype_detail.html',
+                controller: 'DocTypeDetailCtrl',
+                resolve: {
+                    docType: function (DocTypesSvc, $stateParams) {
+                        return DocTypesSvc.get($stateParams.id);
+                    }
+                }
+            })
+            .state('doctypes.create', {
+                // url: '/new',
+                templateUrl: window.static_root + 'templates/doctype_detail.html',
+                controller: 'DocTypeDetailCtrl',
+                resolve: {
+                    docType: function () {
+                        return {};
                     }
                 }
             })

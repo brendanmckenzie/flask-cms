@@ -1,8 +1,8 @@
 (function (window) {
     'use strict';
 
-    function DocTypesCtrl($scope, $http, data) {
-        $scope.docTypes = data;
+    function DocTypesCtrl($scope, $http, docTypes) {
+        $scope.docTypes = docTypes;
 
         $scope.fieldTypes = ['shortText', 'longText', 'image'];
 
@@ -12,15 +12,26 @@
             });
         };
 
+        $scope.$on('doctypes:updated', function () {
+            $scope.loadDocTypes();
+        });
+    }
+
+    window.app.controller('DocTypesCtrl', ['$scope', '$http', 'docTypes', DocTypesCtrl]);
+
+    function DocTypeDetailCtrl($scope, $http, $state, docType) {
+        $scope.docType = docType;
+
         $scope.saveDocType = function () {
-            var url = ($scope.dt && $scope.dt.id) ? '/cms/api/doc-type/' + $scope.dt.id : '/cms/api/doc-types';
-            $http.post(url, $scope.dt).then(function () {
-                $scope.loadDocTypes();
-                $scope.dt = null;
+            var url = ($scope.docType && $scope.docType.id) ? '/cms/api/doc-type/' + $scope.docType.id : '/cms/api/doc-types';
+            $http.post(url, $scope.docType).then(function () {
+                $scope.$emit('doctypes:updated');
+
+                $state.transitionTo('doctypes');
             });
         };
     }
 
-    window.app.controller('DocTypesCtrl', ['$scope', '$http', 'data', DocTypesCtrl]);
+    window.app.controller('DocTypeDetailCtrl', ['$scope', '$http', '$state', 'docType', DocTypeDetailCtrl]);
 
 })(window);

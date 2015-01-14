@@ -9,6 +9,12 @@
             });
         };
 
+        this.get = function (id) {
+            return $http.get('/cms/api/doc-type/' + id).then(function (resp) {
+                return resp.data;
+            });
+        };
+
         return this;
     }
 
