@@ -12,7 +12,7 @@ def nodes():
     try:
         ent = db.query(Node).all()
 
-        return json_response([a.todict() for a in ent])
+        return json_response([a.tolitedict() for a in ent])
     finally:
         db.close()
 

@@ -56,6 +56,11 @@ class DocumentVersion(Base):
 class Node(Base):
     __tablename__ = 'node'
 
+    def tolitedict(self):
+        return {'id': self.id,
+                'parent_id': self.parent_id,
+                'alias': self.alias}
+
     def todict(self):
         return {'id': self.id,
                 'path': self.path,

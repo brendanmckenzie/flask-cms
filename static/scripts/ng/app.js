@@ -3,7 +3,9 @@
 
     var app = angular.module('app', ['ui.router', 'ngProgress']);
 
-    app.config(['$stateProvider', function ($stateProvider) {
+    app.config(['$locationProvider', '$stateProvider', function ($locationProvider, $stateProvider) {
+        $locationProvider.html5Mode(true);
+
         $stateProvider
             .state('home', { template: '' })
             .state('nodes', {

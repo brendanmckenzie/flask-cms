@@ -3,6 +3,8 @@
 <head>
   <title>CMS Administration</title>
 
+  <base href="{{url_for('cms.home')}}/">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="{{url_for('cms.static', filename='site.css')}}">
@@ -18,9 +20,9 @@
             </div>
 
             <ul class="nav navbar-nav">
-                <li ui-sref-active="active"><a href ui-sref="nodes">Nodes</a></li>
-                <li ui-sref-active="active"><a href ui-sref="doctypes">Document Types</a></li>
-                <li ui-sref-active="active"><a href ui-sref="routes">Routes</a></li>
+                <li ui-sref-active="active"><a ui-sref="nodes">Nodes</a></li>
+                <li ui-sref-active="active"><a ui-sref="doctypes">Document Types</a></li>
+                <li ui-sref-active="active"><a ui-sref="routes">Routes</a></li>
             </ul>
         </div>
   </div>
