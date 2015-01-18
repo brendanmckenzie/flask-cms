@@ -43,12 +43,16 @@ def init_cms(app, db, s3_config, template_root=None):
     app.register_blueprint(cms)
     app.register_blueprint(cms_api)
 
+    @app.route('/')
     @app.route('/<path:path>')
-    def render_node(path):
+    def render_node(path=None):
         from .model import Session
         db = Session()
         try:
-            hier = path.split('/')
+            hier = (path or '').split('/')
+            if hier == ['']:
+                hier = ['home']
+
             node = get_node_from_hier(db, hier)
             if node is None:
                 abort(404)

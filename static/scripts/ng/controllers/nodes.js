@@ -30,11 +30,13 @@
     window.app.controller('NodesCtrl', ['$scope', '$http', 'NodesSvc', 'nodes', NodesCtrl]);
 
     function NodeDetailCtrl($scope, $http, $state, NodesSvc, node, docTypes, templates) {
-        angular.forEach(docTypes, function (docType) {
-            if (docType.id === node.document.docType.id) {
-                node.document.docType = docType;
-            }
-        });
+        if (node.document) {
+            angular.forEach(docTypes, function (docType) {
+                if (docType.id === node.document.docType.id) {
+                    node.document.docType = docType;
+                }
+            });
+        }
 
         $scope.node = node;
         $scope.docTypes = docTypes;
