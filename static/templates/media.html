@@ -1,15 +1,21 @@
 <div class="container">
     <div class="row">
-        <div class="media" ng-repeat="media in allMedia">
-            <a class="media-left">
-                <img ng-src="{{media.thumbnail}}">
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading" ng-bind="media.alias"></h4>
-                <span ng-bind="media.size"></span> <span ng-bind="media.created"></span> <button class="btn btn-danger btn-xs" ng-click="delete(media)">&cross;</button>
+        <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="media in allMedia">
+            <div class="thumbnail">
+                <img ng-src="{{media.thumbnail}}" />
+                <div class="caption">
+                    <h3 ng-bind="media.alias"></h3>
+                    <p>Created: <span ng-bind="media.created"></span></p>
+                    <p>
+                        <button class="btn btn-danger btn-xs" ng-click="delete(media)">&cross; Delete</button>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
+
+    <hr />
+
     <div class="row">
         <button class="btn btn-info" ng-disabled="$uploading" ng-file-select ng-model="uploads" ng-file-change="fileSelected($files, $event)" ng-multiple="true" accept="image/*">Select files</button>
         <div ng-if="uploads">
