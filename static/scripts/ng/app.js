@@ -104,6 +104,7 @@
 
     app.run(['$rootScope', 'ngProgress', function ($rootScope, ngProgress) {
         ngProgress.color('#337ab7');
+
         $rootScope.$on('$stateChangeStart', function () {
             ngProgress.start();
         });
