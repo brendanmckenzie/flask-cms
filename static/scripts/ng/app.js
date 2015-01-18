@@ -1,7 +1,7 @@
 (function (window) {
     'use strict';
 
-    var app = angular.module('app', ['ui.router', 'ngProgress']);
+    var app = angular.module('app', ['ui.router', 'ngProgress', 'angularFileUpload']);
 
     app.config(['$locationProvider', '$stateProvider', function ($locationProvider, $stateProvider) {
         $locationProvider.html5Mode(true);
@@ -77,6 +77,16 @@
                 resolve: {
                     docType: function () {
                         return {};
+                    }
+                }
+            })
+            .state('media', {
+                url: '/media',
+                templateUrl: window.static_root + 'templates/media.html',
+                controller: 'MediaCtrl',
+                resolve: {
+                    media: function (MediaSvc) {
+                        return MediaSvc.all();
                     }
                 }
             })

@@ -11,10 +11,10 @@ metadata = MetaData(engine, schema='cms')
 
 Base = automap_base(metadata=metadata)
 
-from models import Document, DocumentType, DocumentVersion, Node
+from models import Document, DocumentType, DocumentVersion, Node, Media
 
 Base.prepare(engine, reflect=True)
 
 
 __all__ = ['Session', 'Base', 'Document', 'DocumentType',
-           'DocumentVersion', 'Node']
+           'DocumentVersion', 'Node', 'Media']

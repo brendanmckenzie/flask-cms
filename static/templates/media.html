@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="media" ng-repeat="media in allMedia">
+            <a class="media-left">
+                <img ng-src="{{media.thumbnail}}">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading" ng-bind="media.alias"></h4>
+                <span ng-bind="media.size"></span> <span ng-bind="media.created"></span> <button class="btn btn-danger btn-xs" ng-click="delete(media)">&cross;</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-info" ng-disabled="$uploading" ng-file-select ng-model="uploads" ng-file-change="fileSelected($files, $event)" ng-multiple="true" accept="image/*">Select files</button>
+        <div ng-if="uploads">
+            <h5>Files to upload</h5>
+            <ul>
+                <li ng-repeat="f in uploads"><span ng-bind="f.name"></span> <button class="btn btn-warning btn-xs" ng-click="uploads.splice($index, 1)">&cross;</button></li>
+            </ul>
+
+            <p>
+                <button class="btn btn-primary" ng-click="upload()">Upload</button>
+            </p>
+
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" ng-style="{'width': $uploadProgress + '%'}">
+                    <span ng-bind="$uploadProgress + '%'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

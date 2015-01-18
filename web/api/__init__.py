@@ -26,5 +26,6 @@ import doctypes
 import nodes
 import templates
 import routes
+import media
 
-__all__ = ['doctypes', 'nodes', 'templates', 'routes']
+__all__ = ['doctypes', 'nodes', 'templates', 'routes', 'media']

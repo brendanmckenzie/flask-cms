@@ -1,4 +1,3 @@
-from flask import url_for
 from cms import main_app, config
 from . import cms_api, json_response
 from .. import requires_admin

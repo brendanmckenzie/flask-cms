@@ -1,5 +1,6 @@
 from sqlalchemy.orm import relationship
 from . import Base
+from cms import config
 
 
 class Document(Base):
@@ -70,3 +71,14 @@ class Node(Base):
                 'is_published': self.is_published,
                 'published': self.published,
                 'document': self.document.todict()}
+
+
+class Media(Base):
+    __tablename__ = 'media'
+
+    def todict(self):
+        return {'id': self.id,
+                'alias': self.alias,
+                'thumbnail': config['s3']['url_root'] + self.hash,
+                'created': self.created,
+                'modified': self.modified}

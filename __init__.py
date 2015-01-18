@@ -4,6 +4,7 @@ from sqlalchemy import and_
 main_app = None
 config = {}
 config['template_root'] = 'cms_content/'
+config['s3'] = {}
 
 
 def get_node_from_hier(db, hier):
@@ -24,7 +25,7 @@ def get_node_from_hier(db, hier):
     return cur_node
 
 
-def init_cms(app, db, template_root=None):
+def init_cms(app, db, s3_config, template_root=None):
     global main_app
 
     main_app = app
@@ -32,6 +33,9 @@ def init_cms(app, db, template_root=None):
     config['db'] = db
     if template_root:
         config['template_root'] = template_root
+
+    if s3_config:
+        config['s3'] = s3_config
 
     from web import cms
     from web.api import cms_api

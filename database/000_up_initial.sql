@@ -38,3 +38,12 @@ create table cms.node (
     is_published boolean not null default 'false',
     published timestamp
 );
+
+create table cms.media (
+    id serial not null primary key,
+    hash char(32),
+    alias varchar(128) not null,
+
+    created timestamp not null default current_timestamp,
+    modified timestamp not null default current_timestamp
+);
