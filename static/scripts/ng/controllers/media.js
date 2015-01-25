@@ -6,7 +6,7 @@
 
         $scope.refresh = function () {
             MediaSvc.all().then(function (resp) {
-                $scope.allMedia = resp.data;
+                $scope.allMedia = resp;
             });
         };
 

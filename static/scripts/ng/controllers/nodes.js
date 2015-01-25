@@ -38,6 +38,14 @@
             });
         }
 
+        if (node.parent_id) {
+            angular.forEach($scope.nodes, function (node2) {
+                if (node2.id === node.parent_id) {
+                    node.parent = node2;
+                }
+            });
+        }
+
         $scope.node = node;
         $scope.docTypes = docTypes;
         $scope.templates = templates;
