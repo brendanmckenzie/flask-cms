@@ -1,7 +1,7 @@
 (function (window) {
     'use strict';
 
-    var app = angular.module('app', ['ui.router', 'ngProgress', 'angularFileUpload']);
+    var app = angular.module('app', ['ui.router', 'ngProgress', 'angularFileUpload', 'ui.bootstrap']);
 
     app.config(['$locationProvider', '$stateProvider', function ($locationProvider, $stateProvider) {
         $locationProvider.html5Mode(true);

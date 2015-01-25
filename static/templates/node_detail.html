@@ -28,12 +28,28 @@
         </div>
     </div>
 
+    <hr />
+
     <ul class="list-unstyled">
         <li ng-repeat="f in node.document.docType.fields">
             <div class="form-group">
                 <label ng-bind="f.name"></label>
                 <input ng-if="f.type == 'shortText'" type="text" class="form-control" ng-model="node.document.data[f.alias]" />
                 <textarea ng-if="f.type == 'longText'" class="code form-control" ng-model="node.document.data[f.alias]"></textarea>
+                <div ng-if="f.type == 'image'" class="row">
+                    <div class="col-lg-9">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="node.document.data[f.alias]" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" ng-click="node.document.data[f.alias]=null">&cross;</button>
+                                <button class="btn btn-default" type="button" media-selector ng-model="node.document.data[f.alias]"><i class="fa fa-ellipsis-h"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3" ng-if="node.document.data[f.alias]">
+                        <img ng-src="{{node.document.data[f.alias]}}" />
+                    </div>
+                </div>
             </div>
         </li>
     </ul>
