@@ -15,6 +15,12 @@
             });
         };
 
+        this.fieldTypes = function () {
+            return $http.get('/cms/api/field-types').then(function (resp) {
+                return resp.data;
+            });
+        };
+
         return this;
     }
 

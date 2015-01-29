@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from flask import request
 from cms.model import Session, DocumentType
@@ -15,6 +16,18 @@ def doc_types():
         return json_response([a.todict() for a in ents])
     finally:
         db.close()
+
+
+@cms_api.route('/field-types', methods=['GET'])
+@requires_admin
+def field_types():
+    path = os.path.dirname(os.path.realpath(__file__))
+    editors_path = path + '/../../static/editors'
+    files = os.listdir(editors_path)
+
+    files = [f[:-5] for f in files]
+
+    return json_response(files)
 
 
 @cms_api.route('/doc-types', methods=['POST'])

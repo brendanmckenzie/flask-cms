@@ -1,0 +1,16 @@
+<ul class="list-unstyled">
+    <li ng-repeat="i in node.document.data[f.alias] track by $index">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="node.document.data[f.alias][$index]" />
+                <span class="input-group-btn">
+                    <button class="btn btn-warning" type="button" ng-click="node.document.data[f.alias].splice($index, 1)"><i class="fa fa-trash-o"></i></button>
+                </span>
+            </div>
+        </div>
+    </li>
+    <li>
+        <button class="btn btn-xs btn-default" type="button" ng-click="(node.document.data[f.alias]=node.document.data[f.alias]||[]).push('')">Add</button>
+    </li>
+</ul>
+

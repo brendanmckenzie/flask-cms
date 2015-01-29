@@ -55,6 +55,9 @@
                 templateUrl: window.static_root + 'templates/doctypes.html',
                 controller: 'DocTypesCtrl',
                 resolve: {
+                    fieldTypes: function (DocTypesSvc) {
+                        return DocTypesSvc.fieldTypes();
+                    },
                     docTypes: function (DocTypesSvc) {
                         return DocTypesSvc.all();
                     }

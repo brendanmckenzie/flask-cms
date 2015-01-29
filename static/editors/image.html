@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-lg-9">
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="node.document.data[f.alias]" />
+            <span class="input-group-btn">
+                <button class="btn btn-warning" type="button" ng-click="node.document.data[f.alias]=null"><i class="fa fa-trash-o"></i></button>
+                <button class="btn btn-default" type="button" media-selector ng-model="node.document.data[f.alias]"><i class="fa fa-ellipsis-h"></i></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-3" ng-if="node.document.data[f.alias]">
+        <img ng-src="{{node.document.data[f.alias]}}" />
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<ul class="list-unstyled">
+    <li ng-repeat="i in node.document.data[f.alias]">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="input-group form-group">
+                    <input type="text" class="form-control" ng-model="i.url" placeholder="Url" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-warning" type="button" ng-click="i.url=null"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-default" type="button" media-selector ng-model="i.url"><i class="fa fa-ellipsis-h"></i></button>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="i.caption" placeholder="Caption" />
+                </div>
+            </div>
+            <div class="col-lg-3" ng-if="i.url">
+                <img ng-src="{{i.url}}" />
+            </div>
+        </div>
+    </li>
+    <li>
+        <button class="btn btn-xs btn-default" type="button" ng-click="(node.document.data[f.alias]=node.document.data[f.alias]||[]).push({})">Add</button>
+    </li>
+</ul>
+

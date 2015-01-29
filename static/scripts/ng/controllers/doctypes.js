@@ -1,10 +1,10 @@
 (function (window) {
     'use strict';
 
-    function DocTypesCtrl($scope, $http, docTypes) {
+    function DocTypesCtrl($scope, $http, docTypes, fieldTypes) {
         $scope.docTypes = docTypes;
 
-        $scope.fieldTypes = ['shortText', 'longText', 'image'];
+        $scope.fieldTypes = fieldTypes;
 
         $scope.loadDocTypes = function () {
             $http.get('/cms/api/doc-types').then(function (resp) {
@@ -17,7 +17,7 @@
         });
     }
 
-    window.app.controller('DocTypesCtrl', ['$scope', '$http', 'docTypes', DocTypesCtrl]);
+    window.app.controller('DocTypesCtrl', ['$scope', '$http', 'docTypes', 'fieldTypes', DocTypesCtrl]);
 
     function DocTypeDetailCtrl($scope, $http, $state, docType) {
         $scope.docType = docType;

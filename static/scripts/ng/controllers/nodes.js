@@ -55,7 +55,7 @@
             $http.post(url, $scope.node).then(function () {
                 $scope.$emit('nodes:updated');
 
-                $state.transitionTo('nodes');
+                // $state.transitionTo('nodes');
             });
         };
 
@@ -66,6 +66,10 @@
 
                 $state.transitionTo('nodes');
             });
+        };
+
+        $scope.editorTemplateUrl = function (type) {
+            return window.static_root + 'editors/' + type + '.html';
         };
     }
 
