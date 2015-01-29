@@ -13,10 +13,14 @@ def get_node_from_hier(db, hier):
     cur_node = None
     for alias in hier:
         node = None
+        q = None
         if cur_node is None:
-            node = db.query(Node).filter(and_(Node.alias == alias, Node.parent_id == None))
+            q = and_(Node.alias == alias, Node.parent_id.is_(None))
         else:
-            node = db.query(Node).filter(and_(Node.alias == alias, Node.parent_id == cur_node.id))
+            q = and_(Node.alias == alias, Node.parent_id == cur_node.id)
+
+        node = db.query(Node).filter(q)
+
         if any(node):
             cur_node = node[0]
         else:
