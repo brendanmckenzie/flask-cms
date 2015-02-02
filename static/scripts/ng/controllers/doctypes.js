@@ -30,6 +30,10 @@
                 $state.transitionTo('doctypes');
             });
         };
+
+        $scope.export = function () {
+            window.location = '/cms/api/doc-type/' + $scope.docType.id + '/export';
+        };
     }
 
     window.app.controller('DocTypeDetailCtrl', ['$scope', '$http', '$state', 'docType', DocTypeDetailCtrl]);
