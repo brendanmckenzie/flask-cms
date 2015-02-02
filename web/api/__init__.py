@@ -22,6 +22,14 @@ class JsonEncoder(json.JSONEncoder):
 def json_response(data):
     return Response(json.dumps(data, cls=JsonEncoder, separators=(',', ':')), mimetype='application/json')
 
+
+def file_response(data, filename):
+    resp = Response(json.dumps(data, cls=JsonEncoder, separators=(',', ':')), mimetype='application/json')
+
+    resp.headers["Content-Disposition"] = "attachment; filename=%s" % (filename, )
+
+    return resp
+
 import doctypes
 import nodes
 import templates

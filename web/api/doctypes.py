@@ -1,8 +1,8 @@
 import os
 from datetime import datetime
-from flask import request
+from flask import request, json
 from cms.model import Session, DocumentType
-from . import cms_api, json_response
+from . import cms_api, json_response, file_response
 from .. import requires_admin
 
 
@@ -74,5 +74,58 @@ def doc_type_update(id):
         db.commit()
 
         return json_response(ent.todict())
+    finally:
+        db.close()
+
+
+@cms_api.route('/doc-type/<int:id>/export', methods=['GET'])
+@requires_admin
+def doc_type_export(id):
+    db = Session()
+    try:
+        ent = db.query(DocumentType).get(id)
+
+        ret = ent.todict()
+
+        del ret['id']
+
+        return file_response(ret, ent.alias + '.cms-dt')
+    finally:
+        db.close()
+
+
+@cms_api.route('/doc-type/import', methods=['POST'])
+@requires_admin
+def doc_type_import():
+    db = Session()
+    try:
+        # lookup doc type by alias
+        # if not found, create
+        # if found, update
+
+        ret = []
+
+        for fd in request.files.getlist('file'):
+            content = fd.read()
+            data = json.loads(content)
+
+            ent = db.query(DocumentType).filter(DocumentType.alias == data['alias']).first()
+
+            if not ent:
+                ent = DocumentType()
+                ent.created = data['created']
+                ent.modified = data['modified']
+                ent.alias = data['alias']
+
+                db.add(ent)
+
+            ent.name = data['name']
+            ent.fields = data['fields']
+
+            ret += [ent.todict()]
+
+        db.commit()
+
+        return json_response(ret)
     finally:
         db.close()
