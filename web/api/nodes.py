@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import request
 from cms.model import Session, Node, Document, DocumentVersion
-from . import cms_api, json_response
+from . import cms_api, json_response, file_response
 from .. import requires_admin, empty_response
 
 
@@ -95,5 +95,21 @@ def node_delete(id):
         db.commit()
 
         return empty_response()
+    finally:
+        db.close()
+
+
+@cms_api.route('/node/<int:id>/export', methods=['GET'])
+@requires_admin
+def node_export(id):
+    db = Session()
+    try:
+        ent = db.query(Node).get(id)
+
+        ret = ent.todict()
+
+        del ret['id']
+
+        return file_response(ret, ent.alias + '.cms-node')
     finally:
         db.close()
