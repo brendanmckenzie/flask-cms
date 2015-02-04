@@ -39,5 +39,7 @@
         </li>
     </ul>
     <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-info" type="button" ng-if="node.id" ng-click="export()">Export</button>
+    <button class="btn btn-info" type="button" ng-click="import()">Import</button>
     <button class="btn btn-danger" type="button" ng-if="node.id" ng-really-click="deleteNode()">Delete</button>
 </form>

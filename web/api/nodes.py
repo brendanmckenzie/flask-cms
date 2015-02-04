@@ -37,6 +37,11 @@ def node_update(id):
         ent = db.query(Node).get(id)
 
         ent.alias = request.json['alias']
+        ent.parent_id = request.json.get('parent_id')
+
+        if ent.parent_id and ent.parent_id == ent.id:
+            # avoid recursion
+            ent.parent_id = None
 
         ent.document.modified = datetime.utcnow()
         ent.document.template = request.json['document']['template']

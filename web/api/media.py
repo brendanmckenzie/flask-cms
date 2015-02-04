@@ -27,6 +27,7 @@ def media_upload():
     try:
         ret = []
 
+        bucket = config['s3']['bucket']
         s3 = tinys3.Connection(config['s3']['access_key'],
                                config['s3']['secret_key'],
                                tls=True)
@@ -39,7 +40,7 @@ def media_upload():
             hash = m.hexdigest()
             path = hash[0:2] + hash[2:]
             # upload to s3
-            s3.upload('media/' + path, fd, 'takeoffgo')
+            s3.upload('media/' + path, fd, bucket)
             # store in database
 
             ent = Media()

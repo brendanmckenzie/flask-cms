@@ -51,6 +51,10 @@
         $scope.templates = templates;
 
         $scope.saveNode = function () {
+            if ($scope.node.parent) {
+                $scope.node.parent_id = $scope.node.parent.id;
+            }
+
             var url = ($scope.node && $scope.node.id) ? '/cms/api/node/' + $scope.node.id : '/cms/api/nodes';
             $http.post(url, $scope.node).then(function () {
                 $scope.$emit('nodes:updated');
@@ -70,6 +74,48 @@
 
         $scope.editorTemplateUrl = function (type) {
             return window.static_root + 'editors/' + type + '.html';
+        };
+
+        // TODO: angularify this
+        $scope.import = function() {
+            var el = document.createElement('input');
+            el.type = 'file';
+
+            el.addEventListener('change', function (ev) {
+                var fd = ev.target.files[0];
+
+                var reader = new FileReader();
+
+                reader.onload = function (ev) {
+                    var data = ev.target.result;
+
+                    try {
+                        var obj = JSON.parse(data);
+
+                        $scope.$apply(function () {
+                            if (!$scope.node.document) {
+                                $scope.node.document = {};
+                            }
+                            $scope.node.alias = obj.alias;
+                            $scope.node.document.data = obj.document.data;
+                            $scope.node.document.template = obj.document.template;
+
+                            angular.forEach($scope.docTypes, function (docType) {
+                                if (docType.id === obj.document.docType.id) {
+                                    $scope.node.document.docType = docType;
+                                }
+                            });
+                        });
+                    }
+                    catch (ex) {
+                        console.error('invalid file');
+                    }
+                };
+
+                reader.readAsText(fd, 'UTF-8');
+            });
+
+            el.click();
         };
     }
 

@@ -34,6 +34,39 @@
         $scope.export = function () {
             window.location = '/cms/api/doc-type/' + $scope.docType.id + '/export';
         };
+
+        // TODO: angularify this
+        $scope.import = function() {
+            var el = document.createElement('input');
+            el.type = 'file';
+
+            el.addEventListener('change', function (ev) {
+                var fd = ev.target.files[0];
+
+                var reader = new FileReader();
+
+                reader.onload = function (ev) {
+                    var data = ev.target.result;
+
+                    try {
+                        var obj = JSON.parse(data);
+
+                        $scope.$apply(function () {
+                            $scope.docType.alias = obj.alias;
+                            $scope.docType.name = obj.name;
+                            $scope.docType.fields = obj.fields;
+                        });
+                    }
+                    catch (ex) {
+                        console.error('invalid file');
+                    }
+                };
+
+                reader.readAsText(fd, 'UTF-8');
+            });
+
+            el.click();
+        };
     }
 
     window.app.controller('DocTypeDetailCtrl', ['$scope', '$http', '$state', 'docType', DocTypeDetailCtrl]);
